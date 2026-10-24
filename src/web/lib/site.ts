@@ -1,3 +1,4 @@
+import { asset } from "./demo";
 export type Service = {
   name: string;
   text: string;
@@ -31,7 +32,7 @@ export const CATEGORIES: Category[] = [
     short: "GST, Company, LLP, MSME, FSSAI and more.",
     intro:
       "Starting a business? We handle the government paperwork for you, fully online. You share documents on WhatsApp and we do the rest.",
-    image: "/images/cat-registration.jpg",
+    image: asset("/images/cat-registration.jpg"),
     menuItems: [
       "GST Registration",
       "Company Registration (Pvt Ltd)",
@@ -70,7 +71,7 @@ export const CATEGORIES: Category[] = [
     short: "Logo, visiting cards and a brand look people remember.",
     intro:
       "Your brand is how customers recognise you. We create a logo and a matching look for your cards, letterheads and profile.",
-    image: "/images/cat-branding.jpg",
+    image: asset("/images/cat-branding.jpg"),
     menuItems: ["Logo Design", "Business Card", "Letterhead", "Brand Name & Tagline", "Company Profile", "Full Brand Kit"],
     who: ["New businesses that need a look", "Businesses with an old or unclear brand", "Shops, clinics, cafes and startups"],
     includes: ["Short call to understand your business", "2–3 design options to choose from", "Changes until you are happy", "Final files for print and online (PNG, PDF, SVG)"],
@@ -94,7 +95,7 @@ export const CATEGORIES: Category[] = [
     short: "Brochures, flyers, packaging and banners, ready to print.",
     intro:
       "Need something designed for print or online? We create ready-to-print files that look great and send the right message.",
-    image: "/images/cat-design.jpg",
+    image: asset("/images/cat-design.jpg"),
     menuItems: ["Brochure", "Flyer & Poster", "Packaging", "Flex & Hoarding", "Menu Card", "Certificates & ID Cards"],
     who: ["Businesses printing marketing material", "Shops and restaurants", "Event and exhibition teams"],
     includes: ["Design based on your brand", "Ready-to-print files with correct size", "Changes included", "Help with printing if needed"],
@@ -119,7 +120,7 @@ export const CATEGORIES: Category[] = [
     short: "We post, manage and grow your Instagram and Facebook.",
     intro:
       "No time for social media? We plan, design and post for you every month — and run ads that bring real enquiries.",
-    image: "/images/cat-social.jpg",
+    image: asset("/images/cat-social.jpg"),
     menuItems: ["Instagram & Facebook Handling", "Monthly Posts", "Reels Planning", "Paid Ads (Boosting)", "Promo Videos"],
     who: ["Businesses with no time for social media", "Shops and brands that want more enquiries", "Anyone starting on Instagram or Facebook"],
     includes: ["Monthly plan shared in advance", "Designed posts and captions", "Posting on time", "Simple monthly report"],
@@ -140,7 +141,7 @@ export const CATEGORIES: Category[] = [
     short: "Business websites and online stores that work on mobile.",
     intro:
       "Get found on Google and take orders online. We build fast websites that look great on every phone — and keep them running.",
-    image: "/images/cat-website.jpg",
+    image: asset("/images/cat-website.jpg"),
     menuItems: ["Business Website", "Online Store", "Landing Page", "Website Redesign", "Domain & Hosting", "Website Maintenance"],
     who: ["Businesses without a website", "Businesses with an old or slow website", "Shops that want to sell online"],
     includes: ["Mobile-friendly design", "Domain, hosting and SSL setup", "Contact form and WhatsApp button", "Basic Google setup (SEO)", "1 month free support"],
@@ -164,7 +165,7 @@ export const CATEGORIES: Category[] = [
     short: "WhatsApp replies and chatbots that work 24×7.",
     intro:
       "Let smart tools handle the repeat work. Customers get instant replies, and you never miss an enquiry — even at night.",
-    image: "/images/cat-ai.jpg",
+    image: asset("/images/cat-ai.jpg"),
     menuItems: ["WhatsApp Auto-Reply", "Website Chatbot", "Lead Follow-up Automation", "Appointment Booking Bot", "AI Training for Staff"],
     who: ["Businesses getting many repeat questions", "Teams that miss enquiries after hours", "Owners who want to save time"],
     includes: ["Setup on your WhatsApp or website", "Trained on your business details", "Testing before going live", "Simple training for your team"],
@@ -186,7 +187,7 @@ export const CATEGORIES: Category[] = [
     short: "Fundamentals training for Azure, AI, Copilot, Microsoft 365, Power Platform and Security.",
     intro:
       "Get Microsoft certified with simple, guided training. We teach you the topics, give you practice tests and help you book your exam.",
-    image: "/images/cat-microsoft-v2.jpg",
+    image: asset("/images/cat-microsoft-v2.jpg"),
     menuItems: [
       "AB-900: Copilot & Agent Administration Fundamentals",
       "AI-901: Azure AI Fundamentals",
@@ -218,7 +219,7 @@ export const slugify = (s: string) =>
 
 export const SLIDES = [
   {
-    image: "/images/slide-registration.jpg",
+    image: asset("/images/slide-registration.jpg"),
     tag: "Business Registration",
     title: "Start Your Business the Right Way",
     text: "GST, Company, LLP, MSME and Trademark registration. We handle the paperwork, so you can focus on your business.",
@@ -227,7 +228,7 @@ export const SLIDES = [
     linkText: "See Registration Services",
   },
   {
-    image: "/images/slide-microsoft.jpg",
+    image: asset("/images/slide-microsoft.jpg"),
     tag: "Microsoft Certifications",
     title: "Get Microsoft Certified",
     text: "Simple, guided training for Microsoft Fundamentals exams — with practice tests and exam booking help.",
@@ -237,7 +238,7 @@ export const SLIDES = [
     badges: true,
   },
   {
-    image: "/images/slide-branding.jpg",
+    image: asset("/images/slide-branding.jpg"),
     tag: "Logo & Branding",
     title: "Look Professional From Day One",
     text: "Logo, business cards, brochures and packaging that make customers trust you.",
@@ -246,7 +247,7 @@ export const SLIDES = [
     linkText: "See Branding Services",
   },
   {
-    image: "/images/slide-online.jpg",
+    image: asset("/images/slide-online.jpg"),
     tag: "Website & Social Media",
     title: "Get More Customers Online",
     text: "A website that works on every phone, plus social media pages that bring in enquiries.",

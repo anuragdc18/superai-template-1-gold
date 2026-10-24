@@ -1,8 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { orpc } from "../lib/api";
+import { DEMO, demoLead } from "../lib/demo";
 
 export function useCreateLead() {
-  return useMutation(orpc.leads.create.mutationOptions());
+  return useMutation({ ...orpc.leads.create.mutationOptions(), ...(DEMO ? { mutationFn: demoLead } : {}) });
 }
 
 export function useLeads() {

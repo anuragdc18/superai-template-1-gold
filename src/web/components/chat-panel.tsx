@@ -5,6 +5,7 @@ import { waLink } from "../lib/site";
 import { fillTokens, telHref, useSite } from "../queries/site";
 import { useCreateLead } from "../queries/leads";
 import { client } from "../lib/api";
+import { DEMO } from "../lib/demo";
 import { WaIcon } from "./header";
 import { respond, startChat, type Action, type BotLink, type Chip, type Customer, type Memory } from "../lib/bot/engine";
 
@@ -171,7 +172,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
         if (bot.collectDetails || a.customer.phone) saveCustomer(a.customer);
       } else if (a.type === "saveLead") {
         createLead.mutate({ ...a.lead, email: a.lead.email ?? "", source: "chatbot" });
-      } else if (a.type === "miss") {
+      } else if (a.type === "miss" && !DEMO) {
         client.bot.logMiss({ question: a.question }).catch(() => {});
       }
     }

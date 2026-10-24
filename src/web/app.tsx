@@ -16,6 +16,7 @@ import { Header } from "./components/header";
 import { Footer } from "./components/footer";
 import { FloatingActions } from "./components/floating-actions";
 import { SiteTheme } from "./components/site-theme";
+import { DEMO } from "./lib/demo";
 
 /** Admin panel — its own interface, no website header/footer. */
 function AdminApp() {
@@ -64,7 +65,7 @@ function WebsiteApp() {
 
 function App() {
   const [loc] = useLocation();
-  const isAdmin = loc === "/admin" || loc.startsWith("/admin/");
+  const isAdmin = !DEMO && (loc === "/admin" || loc.startsWith("/admin/"));
   return (
     <Provider>
       <SiteTheme />

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { DEMO } from "../lib/demo";
 import { Link, useLocation } from "wouter";
 import { Clock, Mail, Menu, MessageCircle, Minus, Phone, Plus, X, ArrowRight, LayoutDashboard } from "lucide-react";
 import { CATEGORIES, serviceUrl, waLink } from "../lib/site";
@@ -38,7 +39,8 @@ export function Header() {
   const [acc, setAcc] = useState<string | null>("registration");
   const [loc] = useLocation();
   const site = useSite();
-  const { data: session } = authClient.useSession();
+  // no login server in the GitHub Pages demo (DEMO never changes at runtime, so this hook order is stable)
+  const { data: session } = DEMO ? { data: null } : authClient.useSession();
 
   useEffect(() => {
     setOpen(false);

@@ -10,7 +10,7 @@ import App from "./app.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <Router>
+    <Router base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
       <App />
     </Router>
   </StrictMode>,

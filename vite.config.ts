@@ -14,6 +14,8 @@ export default defineConfig(({ mode }) => {
   Object.assign(process.env, env);
 
   return {
+    // GitHub Pages serves from /<repo-name>/ (set by the Pages workflow)
+    base: process.env.PAGES_BASE || "/",
     // All env files live at the repo root — keep Vite's own env loading there too,
     // so packages/web/.env* files can never shadow the root .env.
     envDir: root,
