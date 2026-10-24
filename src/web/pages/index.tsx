@@ -28,7 +28,7 @@ function Hero() {
   const n = SLIDES.length;
   useEffect(() => {
     if (paused) return;
-    const t = setTimeout(() => setI((v) => (v + 1) % n), 6500);
+    const t = setTimeout(() => setI((v) => (v + 1) % n), 5000);
     return () => clearTimeout(t);
   }, [i, paused, n]);
   const s = SLIDES[i];
