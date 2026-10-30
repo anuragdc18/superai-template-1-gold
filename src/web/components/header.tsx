@@ -5,6 +5,7 @@ import { Clock, Mail, Menu, MessageCircle, Minus, Phone, Plus, X, ArrowRight, La
 import { CATEGORIES, serviceUrl, waLink } from "../lib/site";
 import { telHref, useSite } from "../queries/site";
 import { authClient } from "../lib/auth";
+import { useExtraLinks } from "./content-ui";
 
 /** Gold square monogram + serif name (or the uploaded logo). */
 export function Logo({ light: _light = false }: { light?: boolean }) {
@@ -35,6 +36,7 @@ function WaIcon({ className = "h-4 w-4" }: { className?: string }) {
 export { WaIcon };
 
 export function Header() {
+  const extra = useExtraLinks();
   const [open, setOpen] = useState(false);
   const [acc, setAcc] = useState<string | null>("registration");
   const [loc] = useLocation();
@@ -78,7 +80,7 @@ export function Header() {
         <div className="container-x flex h-20 items-center gap-6">
           <Logo />
 
-          <nav className="ml-11 hidden items-center min-[1150px]:flex">
+          <nav className="ml-11 hidden items-center min-[1280px]:flex">
             <Link to="/" className={`px-3 py-2 text-[15px] font-bold ${loc === "/" ? "text-brand" : "text-soft hover:text-brand"}`}>
               Home
             </Link>
@@ -86,7 +88,7 @@ export function Header() {
               <div key={c.slug} className="group relative">
                 <Link
                   to={`/services/${c.slug}`}
-                  className={`block whitespace-nowrap px-2.5 py-2 text-[15px] font-bold transition xl:px-3 ${
+                  className={`block whitespace-nowrap px-2.5 py-2 text-[15px] font-bold transition xl:px-2.5 ${
                     loc.startsWith(`/services/${c.slug}`) ? "text-brand" : "text-soft group-hover:text-brand"
                   }`}
                 >
@@ -110,15 +112,32 @@ export function Header() {
                 </div>
               </div>
             ))}
+            {extra.length > 0 && (
+              <div className="group relative">
+                <button type="button" className={`block whitespace-nowrap px-2.5 py-2 text-[15px] font-bold transition xl:px-2.5 ${extra.some((x) => loc.startsWith(x.to)) ? "text-brand" : "text-soft group-hover:text-brand"}`}>
+                  More
+                </button>
+                <div className="invisible absolute top-full right-0 w-[240px] translate-y-2 pt-4 opacity-0 transition duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                  <div className="border border-line bg-panel p-2 shadow-[0_24px_50px_-20px_rgba(0,0,0,0.8)]">
+                    {[...extra, { to: "/contact", label: "Contact Us" }].map((x) => (
+                      <Link key={x.to} to={x.to} className="flex items-center gap-2.5 px-3 py-2.5 text-[14.5px] text-soft hover:bg-panel2 hover:text-brand">
+                        <span className="h-px w-3 bg-brand" />
+                        {x.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
           </nav>
 
-          <Link to="/contact" className="btn-brand !hidden whitespace-nowrap !px-5 !py-2.5 !text-[15px] min-[1150px]:!ml-auto min-[1150px]:!inline-flex">
+          <Link to="/contact" className="btn-brand !hidden whitespace-nowrap !px-5 !py-2.5 !text-[15px] min-[1280px]:!ml-auto min-[1280px]:!inline-flex">
             Free Consultation
           </Link>
 
           <button
             onClick={() => setOpen(true)}
-            className="ml-auto grid h-11 w-11 place-items-center border border-line text-soft min-[1150px]:hidden"
+            className="ml-auto grid h-11 w-11 place-items-center border border-line text-soft min-[1280px]:hidden"
             aria-label="Open menu"
           >
             <Menu className="h-5 w-5" />
@@ -127,7 +146,7 @@ export function Header() {
       </header>
 
       {/* Mobile drawer */}
-      <div className={`fixed inset-0 z-[60] min-[1150px]:hidden ${open ? "" : "pointer-events-none"}`}>
+      <div className={`fixed inset-0 z-[60] min-[1280px]:hidden ${open ? "" : "pointer-events-none"}`}>
         <button
           type="button"
           aria-label="Close menu overlay"
@@ -173,6 +192,11 @@ export function Header() {
                 </div>
               );
             })}
+            {[...extra, { to: "/contact", label: "Contact Us" }].map((x) => (
+              <Link key={x.to} to={x.to} className="block border-b border-line py-3.5 font-bold text-soft">
+                {x.label}
+              </Link>
+            ))}
             {session && (
               <Link to="/admin/dashboard" className="block py-3.5 font-bold text-brand">
                 Owner Dashboard

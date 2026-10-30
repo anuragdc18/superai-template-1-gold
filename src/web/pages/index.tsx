@@ -19,6 +19,8 @@ import {
 import { CATEGORIES, POPULAR, SLIDES, serviceUrl, waLink } from "../lib/site";
 import { telHref, useSite } from "../queries/site";
 import { LeadForm } from "../components/lead-form";
+import { useContent } from "../queries/content";
+import { PostCard } from "../components/content-ui";
 
 /* ───────────────────────── Hero ───────────────────────── */
 
@@ -275,16 +277,11 @@ const WHY = [
   { icon: Headphones, title: "Real experts", text: "CA, CS and design experts guide you at every step." },
 ];
 
-const REVIEWS = [
-  { name: "Ravi K.", city: "Hyderabad", text: "My GST and company registration were done in a week. Very smooth, and they explained everything simply." },
-  { name: "Priya S.", city: "Bengaluru", text: "They designed our logo and website together. Looks very professional and customers notice it." },
-  { name: "Arjun M.", city: "Pune", text: "Our Instagram enquiries doubled in 2 months. The team posts on time every week." },
-];
 
-function Stars({ size = "h-4 w-4" }: { size?: string }) {
+function Stars({ size = "h-4 w-4", n = 5 }: { size?: string; n?: number }) {
   return (
     <span className="flex gap-0.5 text-[#fe9a00]">
-      {[0, 1, 2, 3, 4].map((k) => (
+      {Array.from({ length: n }, (_, k) => k).map((k) => (
         <Star key={k} className={`${size} fill-current`} />
       ))}
     </span>
@@ -293,6 +290,9 @@ function Stars({ size = "h-4 w-4" }: { size?: string }) {
 
 function WhyAndReviews() {
   const site = useSite();
+  const content = useContent();
+  const rs = content.reviewsSection;
+  const REVIEWS = rs.show ? content.reviews.slice(0, 3) : [];
   return (
     <section className="bg-panel2 py-20 sm:py-[84px]">
       <div className="container-x grid gap-14 lg:grid-cols-[497fr_647fr]">
@@ -311,29 +311,31 @@ function WhyAndReviews() {
             ))}
           </div>
         </div>
-        <div>
+        {REVIEWS.length > 0 && <div>
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h3 className="text-[24px] font-bold">What Our Clients Say</h3>
-            <span className="flex items-center gap-2 text-[15px] text-soft">
-              <Stars /> 4.8 on Google
-            </span>
+            {rs.rating && (
+              <a href={rs.googleUrl || undefined} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-[15px] text-soft">
+                <Stars /> {rs.rating} on Google{rs.ratingCount ? ` (${rs.ratingCount})` : ""}
+              </a>
+            )}
           </div>
           <div className="mt-6 space-y-5">
             {REVIEWS.map((r) => (
-              <figure key={r.name} className="border border-line bg-panel p-6">
-                <Stars />
+              <figure key={r.id} className="border border-line bg-panel p-6">
+                <Stars n={r.rating} />
                 <blockquote className="mt-4 text-[16px] leading-relaxed text-soft">"{r.text}"</blockquote>
                 <figcaption className="mt-5 flex items-center gap-3">
                   <span className="gold-grad grid h-10 w-10 place-items-center rounded-full text-[15px] font-bold text-[#1a1813]">{r.name[0]}</span>
                   <span>
                     <span className="block text-[16px] font-bold text-soft">{r.name}</span>
-                    <span className="text-[14px] text-muted">{r.city}</span>
+                    <span className="text-[14px] text-muted">{r.place}</span>
                   </span>
                 </figcaption>
               </figure>
             ))}
           </div>
-        </div>
+        </div>}
       </div>
     </section>
   );
@@ -341,15 +343,10 @@ function WhyAndReviews() {
 
 /* ───────────────────────── FAQ + CTA ───────────────────────── */
 
-const FAQS = [
-  { q: "Do I need to visit your office?", a: "No. Everything is done online. You can share documents on WhatsApp or email." },
-  { q: "How long does GST registration take?", a: "Usually 3 to 7 working days, once we have all your documents." },
-  { q: "Can you do registration and the website together?", a: "Yes. Many clients start with registration and logo, then add a website. We offer combo prices." },
-  { q: "How do I pay?", a: "You can pay by UPI, debit/credit card or bank transfer. You get a proper GST invoice." },
-  { q: "I'm not sure which registration I need. Can you help?", a: "Yes — that's what the free consultation is for. Our expert will suggest the right option for you." },
-];
 
 function Faq() {
+  const FAQS = useContent().faqs;
+  if (!FAQS.length) return null;
   return (
     <div className="container-x pt-20 sm:pt-[88px]">
       <div className="mb-10 text-center">
@@ -358,7 +355,7 @@ function Faq() {
       </div>
       <div className="grid gap-x-14 md:grid-cols-2">
         {FAQS.map((f, idx) => (
-          <div key={f.q} className="border-t border-line pb-[38px] pt-[30px]">
+          <div key={f.id} className="border-t border-line pb-[38px] pt-[30px]">
             <p className="font-serif text-[16px] font-bold text-brand">Q{idx + 1}.</p>
             <h3 className="mt-1.5 text-[21px] font-bold leading-snug sm:text-[22px]">{f.q}</h3>
             <p className="mt-2 text-[16px] leading-relaxed text-muted">{f.a}</p>
@@ -366,6 +363,31 @@ function Faq() {
         ))}
       </div>
     </div>
+  );
+}
+
+function LatestPosts() {
+  const content = useContent();
+  if (!content.blog.show || !content.posts.length) return null;
+  return (
+    <section className="bg-navy pt-20 sm:pt-[88px]">
+      <div className="container-x">
+        <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p className="eyebrow">{content.blog.title || "Blog"}</p>
+            <h2 className="mt-3 text-[32px] font-bold sm:text-[40px]">Tips & Guides</h2>
+          </div>
+          <Link to="/blog" className="inline-flex items-center gap-1.5 text-[15px] font-bold text-brand hover:gap-2.5">
+            See all articles <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {content.posts.slice(0, 3).map((p) => (
+            <PostCard key={p.id} p={p} />
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -405,6 +427,7 @@ export default function Index() {
       <Popular />
       <Process />
       <WhyAndReviews />
+      <LatestPosts />
       <section className="bg-navy">
         <Faq />
       </section>
