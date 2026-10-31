@@ -116,6 +116,12 @@ export function Footer() {
             © {new Date().getFullYear()} {site.siteName}. All rights reserved.
           </p>
           <p>Serving businesses across India</p>
+          <p>
+            Designed by{" "}
+            <a href="https://digitalconnect.in" target="_blank" rel="noopener" className="font-semibold underline-offset-2 hover:underline">
+              digitalconnect.in
+            </a>
+          </p>
         </div>
       </div>
     </footer>
