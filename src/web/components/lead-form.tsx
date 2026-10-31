@@ -92,7 +92,7 @@ export function LeadForm({
             <option value="">What do you need?</option>
             {CATEGORIES.map((c) => (
               <optgroup key={c.slug} label={c.title}>
-                {c.services.map((s) => (
+                {c.services.filter((s) => c.menuItems.includes(s.name) || s.name === service).map((s) => (
                   <option key={s.name} value={s.name} className="text-soft">
                     {s.name}
                   </option>
